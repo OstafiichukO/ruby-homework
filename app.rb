@@ -1,8 +1,7 @@
-#require 'csv'
-#contacts = File.open("contacts.csv")
-#contacts_data = contacts.readlines.map(&:chomp)
-
 puts "Welcome to ContactBook app console"
+
+@contacts = Array.new
+
 def menu
   puts "Options:"
   puts "1. Create contact"
@@ -17,7 +16,6 @@ menu
 choice = gets.to_i
 
 def create_contact
-  @contacts = Array.new
   contact = {}
   puts "Enter name:"
   contact[:first] = gets.chomp()
@@ -29,52 +27,86 @@ def create_contact
   contact[:telephone] = gets.chomp()
 
   @contacts << contact  
+  
+  puts ("Contact successfully created!")
+  puts ""
+
+  menu
+  choice = gets.to_i
+  check_option choice
 end
 
-case choice
+def read_contacts
+  @contacts.cycle(1) {|el| puts el}
+  puts
+
+  menu
+  choice = gets.to_i
+  check_option choice
+end
+
+def update_contact
+  puts "Enter email:"
+  email = gets.chomp()
+
+  if @contacts.any?{|el|el[:email] == email}
+
+    el = @contacts.find { |el| el[:email] == email }
+    el_index = @contacts.index(el)
+
+    update_contact = {}
+    puts "Enter name:"
+    update_contact[:first] = gets.chomp()
+    puts "Enter Last Name:"
+    update_contact[:last] = gets.chomp()
+    puts "Enter email:: "
+    update_contact[:email] = gets.chomp()
+    puts "Enter telephone:"
+    update_contact[:telephone] = gets.chomp()
+    
+    @contacts[el_index] = update_contact 
+  end
+
+  puts "Contact has been Updated."
+
+  menu
+  choice = gets.to_i
+  check_option choice
+end
+
+def delete_contact
+  puts "Enter email:"
+  email = gets.chomp()
+
+  if @contacts.any? { |el| el[:email] == email}
+    @contacts.delete_if { |el| el[:email] == email }
+  end
+  puts "Contact had been deleted."
+  puts ""
+
+  menu
+  choice = gets.to_i
+  check_option choice
+end
+
+def check_option choice
+  case choice
   when 1
     create_contact
-    #puts "Enter Name:"
-    #name = gets.chomp()
-    #puts "Enter Last Name:"
-    #last_name = gets.chomp()
-    #puts "Enter email:"
-    #email = gets.chomp()
-    #puts "Enter telephone:"
-    #telephone = gets.chomp()
-    #data = (name + last_name + email + telephone).split("\n")
-    #puts contacts.read()
-    #File.open("contacts.txt", "a+"){|contact| contact << #data }
-    #contacts.parse("#{name}, #{last_name}, #{email}, #{telephone}")
-    
-    puts ("Contact successfully created!")
 
   when 2
-    puts contacts
-    #puts contacts_data
-    #puts "Press enter to return to the menu:"
-    #back = gets.to_s
-    #menu
-    #choice = gets.to_i
-  when 3
-    puts "Enter Name:"
-    name = gets.chomp()
-    puts "Enter Last Name:"
-    last_name = gets.chomp()
-    puts "Enter email:"
-    email = gets.chomp()
-    puts "Enter telephone:"
-    telephone = gets.chomp()
-    puts ""
+    read_contacts
 
-    puts "Contact has been Updated."
+  when 3
+    update_contact
+    
   when 4
-    puts "Enter Number:"
-    email = gets.chomp()
-    puts ""
-    puts "Contact had been deleted."
+    delete_contact
+
   when 5
   else
     puts "please Enter a Valid value."
   end
+end
 
+check_option choice
