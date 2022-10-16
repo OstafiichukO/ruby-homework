@@ -1,25 +1,30 @@
 # №1
 class Airport
   def initialize
-    @name = "Kingsford Smith International Airport"
-    @location = "Sydney"
-    @amount_terminals = 5
+    @@name = "Kingsford Smith International Airport"
+    @@amount_terminals = 5
+    @@price = nil
+  end
+
+  def get_place
+    puts "Sydney"
   end
 
   def get_airport_name
-    puts "You are at '#{@name}' "
+    puts "#{@@name}"
   end
 
-  def get_location_name
-    puts "You are at #{@location}"
+  def set_price(price)
+    @@price = price
+  end
+
+
+  def set_amount_terminals(amount)
+    @@amount_terminals = amount
   end
 
   def get_amount_terminals
-    puts "You have #{@amount_terminals} terminals"
-  end
-
-  def set_amount_terminals(amount_terminals)
-    @amount_terminals = amount_terminals
+    puts "You have #{@@amount_terminals} terminals at '#{@@name}'"
   end
 end
 
@@ -29,7 +34,22 @@ end
 
 # №2
 class Terminal < Airport
+  @@planes_capacity = 5
+  @@terminal_number = "2"
+
+  def get_place
+    puts "Zone of " 
+  end
+
+  def get_terminal_info
+    puts "You are at terminal № #{@@terminal_number}"
+  end
 end
+
+terminal = Terminal.new
+puts terminal.get_terminal_info
+puts terminal.get_amount_terminals
+
 # №3
 class Flight
 end
