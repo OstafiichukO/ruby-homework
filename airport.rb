@@ -44,15 +44,31 @@ class Terminal < Airport
   def get_terminal_info
     puts "You are at terminal № #{@@terminal_number}"
   end
+
 end
 
-terminal = Terminal.new
-puts terminal.get_terminal_info
-puts terminal.get_amount_terminals
+#terminal = Terminal.new
+#puts terminal.get_terminal_info
+#puts terminal.get_amount_terminals
+
 
 # №3
-class Flight
+class Flight < Terminal
+  @@flight_number = nil
+
+  def set_flight_number(num)
+    @@flight_number = num
+  end
+
+  def get_flight_info
+    puts "You are at flight №#{@@flight_number}, terminal № #{@@terminal_number} of #{@@name}. Flight price is: #{@@price}"
+  end
 end
+
+flight = Flight.new
+flight.set_price("1000$")
+flight.set_flight_number("FG5469")
+flight.get_flight_info
 # №4
 class Weather
 end
