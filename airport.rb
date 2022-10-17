@@ -27,14 +27,14 @@ class Airport
   end
 end
 
-#airport = Airport.new
-#airport.set_amount_terminals(6)
-#puts airport.get_amount_terminals
+airport = Airport.new
+airport.set_amount_terminals(6)
+puts airport.get_amount_terminals
 
 class Terminal < Airport
   def initialize
-  @@planes_capacity = 5
-  @@terminal_number = "2"
+    @@planes_capacity = 5
+    @@terminal_number = "2"
   end
 
   def get_place
@@ -47,15 +47,16 @@ class Terminal < Airport
 
 end
 
-#terminal = Terminal.new
-#puts terminal.get_terminal_info
-#puts terminal.get_amount_terminals
-#puts terminal.get_place
+terminal = Terminal.new
+puts terminal.get_terminal_info
+puts terminal.get_amount_terminals
+puts terminal.get_airport_name
+
 
 class Flight < Terminal
-  @@flight_number = nil
-  @pilot = Pilot.new
-  @flight_attendants = FlightAttendants.new
+  def initialize
+    @@flight_number = nil
+  end
 
   def set_flight_number(num)
     @@flight_number = num
@@ -66,10 +67,16 @@ class Flight < Terminal
   end
 end
 
-#flight = Flight.new
-#flight.set_price("1000$")
-#flight.set_flight_number("FG5469")
-#flight.get_flight_info
+flight_one = Flight.new
+flight_one.set_price("1000$")
+flight_one.set_flight_number("FG5469")
+flight_one.get_flight_info
+
+flight_two = Flight.new
+flight_two.set_flight_number("DR1194")
+flight_two.set_price("2500$")
+flight_two.get_flight_info
+
 
 module Fuel
   attr_accessor :fuel_type
@@ -105,13 +112,13 @@ class Plane
   end
 end
 
-#plane = Plane.new("Sydney => Barcelona")
-#plane.seats = 90
-#plane.fuel_type = "diesel/w"
-#plane.available_tons = 1500
-#puts plane.fuel_type
-#puts plane.get_plane_info
-#puts plane.route_info
+plane = Plane.new("Sydney => Barcelona")
+plane.seats = 90
+plane.fuel_type = "diesel/w"
+plane.available_tons = 1500
+puts plane.fuel_type
+puts plane.get_plane_info
+puts plane.route_info
 
 class AirplaneCabin
   def initialize
@@ -155,10 +162,12 @@ class Pilot < AirplaneCabin
   end
 end
 
-#pilot = Pilot.new
-#pilot.set_air_temperature(22)
-#pilot.set_food_amount(2)
-#puts pilot.resume
+
+pilot = Pilot.new
+pilot.set_air_temperature(22)
+pilot.set_food_amount(2)
+
+puts pilot.resume
 
 class FlightAttendants < AirplaneCabin
   def initialize(number)
@@ -176,7 +185,11 @@ class FlightAttendants < AirplaneCabin
 
 end
 
-class LostBaggage < Pilot
+airplane_cabine = AirplaneCabin.new
+airplane_cabine.lost_baggage(FlightAttendants.new(10))
+airplane_cabine.lost_baggage(Pilot.new)
+
+class LostBaggage
   def initialize(size)
     @@size = size
   end
@@ -190,6 +203,9 @@ class LostBaggage < Pilot
   end
 end
 
-#airplane_cabine = AirplaneCabin.new
-#airplane_cabine.lost_baggage(FlightAttendants.new(10))
-#airplane_cabine.lost_baggage(Pilot.new)
+#owerwrite
+lost_baggage_small = LostBaggage.new("small")
+lost_baggage_large = LostBaggage.new("large")
+
+puts lost_baggage_small.its_pilot
+puts lost_baggage_large.its_fligh_attendants
