@@ -54,6 +54,8 @@ end
 
 class Flight < Terminal
   @@flight_number = nil
+  @pilot = Pilot.new
+  @flight_attendants = FlightAttendants.new
 
   def set_flight_number(num)
     @@flight_number = num
